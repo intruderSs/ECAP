@@ -1,0 +1,30 @@
+var DynamoDB = require("aws-sdk/clients/dynamodb");
+const send = require('../send');
+var documentClient = new DynamoDB.DocumentClient({
+  region: 'ap-south-1',
+  maxRetries: 3,
+  httpOptions: {
+    timeout: 50000,
+  },
+});
+const TRAINING_TABLE_NAME = process.env.TRAINING_TABLE_NAME;
+
+module.exports.registration = async (event, context, cntxt) => {
+  let usecert = event.pathParameters.usecert;
+  try {
+    const params = {
+      TableName: TRAINING_TABLE_NAME,
+      Key: {
+        'usecert': usecert
+      },
+      // ConditionExpression: 'attribute_exists(Id)'
+    };
+    await documentClient.delete(params).promise();
+    console.log(usecert);
+    cntxt(null, send.statement(200, usecert));
+
+  }
+  catch (err) {
+    cntxt(null, send.statement(500, err.message));
+  }
+}

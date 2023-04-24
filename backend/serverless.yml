@@ -1,0 +1,770 @@
+service: CertificationStackList1
+frameworkVersion: '3'
+# configValidationMode: error
+
+custom:
+  allowedHeaders:
+    - Accept
+    - Content-Type
+    - userName 
+    - Access-Control-Allow-Origin
+    - Access-Control-Allow-Methods
+  
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ap-south-1
+  stage: dev
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-offline 
+
+functions:
+#create
+  createCertificate:
+    handler: api/create.certificate
+    environment:
+      CERTIFICATE_TABLE_NAME: !Ref certificateTablenew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt certificateTablenew.Arn
+    events:
+      - http:
+         method: post
+         path: certificateList
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+          
+       
+
+#update
+  updateCertificate:
+    handler: api/update.certificate
+    environment:
+      CERTIFICATE_TABLE_NAME: !Ref certificateTablenew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt certificateTablenew.Arn
+    events:
+      - http:
+         method: put
+         path: certificateList/{certification_id}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#delete
+  deleteCertificate:
+    handler: api/delete.certificate
+    environment:
+      CERTIFICATE_TABLE_NAME: !Ref certificateTablenew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+        Resource: !GetAtt certificateTablenew.Arn
+    events:
+      - http:
+         method: delete
+         path: certificateList/{certification_id}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+
+
+#getuserspecificCertificates
+  getAllCertificate:
+    handler: api/get.certificate
+    environment:
+      CERTIFICATE_TABLE_NAME: !Ref certificateTablenew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt certificateTablenew.Arn
+    events:
+      - http:
+         method: get
+         path: certificateList
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#user training registration
+#createTrainingRequest
+  createTrainingRequest:
+    handler: api/registration/create.registration
+    environment:
+      TRAINING_TABLE_NAME: !Ref trainingRequestTableNew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt trainingRequestTableNew.Arn
+    events:
+      - http:
+         method: post
+         path: training/register
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+#updateTrainingRequest
+  updateTrainingRequest:
+    handler: api/registration/update.registration
+    environment:
+      TRAINING_TABLE_NAME: !Ref trainingRequestTableNew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt trainingRequestTableNew.Arn
+    events:
+      - http:
+         method: put
+         path: training/updateinfo/{usecert}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#deleteTrainingRequest
+  deleteRequest:
+    handler: api/registration/delete.registration
+    environment:
+      TRAINING_TABLE_NAME: !Ref trainingRequestTableNew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+        Resource: !GetAtt trainingRequestTableNew.Arn
+    events:
+      - http:
+         method: delete
+         path: trainingdelete/{usecert}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#getAllTrainingRequests
+  getAllRegistrationDetails:
+    handler: api/registration/get.registration
+    environment:
+      TRAINING_TABLE_NAME: !Ref trainingRequestTableNew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt trainingRequestTableNew.Arn
+    events:
+      - http:
+         method: get
+         path: training/all
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#getuserspecificTrainingRequests
+  getUserSpecific:
+    handler: api/registration/getuserspecific.registration
+    environment:
+      TRAINING_TABLE_NAME: !Ref trainingRequestTableNew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt trainingRequestTableNew.Arn
+    events:
+      - http:
+         method: get
+         path: training/user
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#userdataTable
+#create
+  createUser:
+    handler: api/user/create.user
+    environment:
+      USER_TABLE_NAME: !Ref userTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt userTable.Arn
+    events:
+      - http:
+         method: post
+         path: user
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+          
+       
+
+#update
+  updateUserData:
+    handler: api/user/update.user
+    environment:
+      USER_TABLE_NAME: !Ref userTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt userTable.Arn
+    events:
+      - http:
+         method: put
+         path: user/update/{email_id}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#adduserSkills
+  addUserSkills:
+    handler: api/user/adduserskills.user
+    environment:
+      USER_TABLE_NAME: !Ref userTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt userTable.Arn
+    events:
+      - http:
+         method: put
+         path: user/addskill/{email_id}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#adminUse
+#adduserCluster
+  addUserCluster:
+    handler: api/user/addcluster.user
+    environment:
+      USER_TABLE_NAME: !Ref userTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt userTable.Arn
+    events:
+      - http:
+         method: put
+         path: user/addcluster/{email_id}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#allotProject
+  allotProject:
+    handler: api/user/addProject.user
+    environment:
+      USER_TABLE_NAME: !Ref userTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt userTable.Arn
+    events:
+      - http:
+         method: put
+         path: user/addproject/{email_id}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#deleteUser
+  deleteUser:
+    handler: api/user/delete.user
+    environment:
+      USER_TABLE_NAME: !Ref userTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+        Resource: !GetAtt userTable.Arn
+    events:
+      - http:
+         method: delete
+         path: deleteuser/{email_id}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#getuserspecificData
+  getSpecificUser:
+    handler: api/user/getuserspecific.user
+    environment:
+      USER_TABLE_NAME: !Ref userTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt userTable.Arn
+    events:
+      - http:
+         method: get
+         path: user/specific
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#getAllUserData
+  getAllUser:
+    handler: api/user/get.user
+    environment:
+      USER_TABLE_NAME: !Ref userTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt userTable.Arn
+    events:
+      - http:
+         method: get
+         path: user/all
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+##course data
+##adminUseOnly
+#getData
+  getAllCourse:
+    handler: api/course/get.data
+    environment:
+      COURSE_TABLE_NAME: !Ref courseTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt courseTable.Arn
+    events:
+      - http:
+         method: get
+         path: course/all
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+#addCourse
+  createCourse:
+    handler: api/course/add.data
+    environment:
+      COURSE_TABLE_NAME: !Ref courseTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt courseTable.Arn
+    events:
+      - http:
+         method: post
+         path: course/add
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+#deleteCourse
+  deleteCourse:
+    handler: api/course/delete.data
+    environment:
+      COURSE_TABLE_NAME: !Ref courseTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt courseTable.Arn
+    events:
+      - http:
+         method: delete
+         path: course/delete/{course_name}
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+#update
+  updateCourse:
+    handler: api/course/update.data
+    environment:
+      COURSE_TABLE_NAME: !Ref courseTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt courseTable.Arn
+    events:
+      - http:
+         method: put
+         path: course/update
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+##approve data
+#getData
+  getAllApproveData:
+    handler: api/approve/get.data
+    environment:
+      APPROVE_TABLE_NAME: !Ref approveTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt approveTable.Arn
+    events:
+      - http:
+         method: get
+         path: approvedata/getall
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+#addApproveData
+  addApproveData:
+    handler: api/approve/create.data
+    environment:
+      APPROVE_TABLE_NAME: !Ref approveTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt approveTable.Arn
+    events:
+      - http:
+         method: post
+         path: approvedata/add
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+#deleteApproveData
+  deleteApproveData:
+    handler: api/approve/delete.data
+    environment:
+      APPROVE_TABLE_NAME: !Ref approveTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt approveTable.Arn
+    events:
+      - http:
+         method: delete
+         path: approvedata/delete/{approve_id}
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+#updateApproveData
+  updateApproveData:
+    handler: api/approve/update.data
+    environment:
+      APPROVE_TABLE_NAME: !Ref approveTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt approveTable.Arn
+    events:
+      - http:
+         method: put
+         path: approvedata/update
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+##course data
+##adminUseOnly
+#getData
+  getAllProject:
+    handler: api/project/get.data
+    environment:
+      PROJECT_TABLE_NAME: !Ref projectTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt projectTable.Arn
+    events:
+      - http:
+         method: get
+         path: projects/all
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+#addCourse
+  addProject:
+    handler: api/project/add.data
+    environment:
+      PROJECT_TABLE_NAME: !Ref projectTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt projectTable.Arn
+    events:
+      - http:
+         method: post
+         path: project/add
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+#deleteCourse
+  deleteProject:
+    handler: api/project/delete.data
+    environment:
+      PROJECT_TABLE_NAME: !Ref projectTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt projectTable.Arn
+    events:
+      - http:
+         method: delete
+         path: project/delete/{project_id}
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+#update
+  updateProjectDetails:
+    handler: api/project/update.data
+    environment:
+      PROJECT_TABLE_NAME: !Ref projectTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt projectTable.Arn
+    events:
+      - http:
+         method: put
+         path: project/update/{project_id}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+##knowledge test
+##adminUseOnly
+#getData
+  getAllTestData:
+    handler: api/knowledgeTest/get.data
+    environment:
+      TEST_TABLE_NAME: !Ref knowledgeTest
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt knowledgeTest.Arn
+    events:
+      - http:
+         method: get
+         path: knowledgetest/all
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+#addTest
+  addTest:
+    handler: api/knowledgeTest/add.data
+    environment:
+      TEST_TABLE_NAME: !Ref knowledgeTest
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+          # - "dyanmodb:Query"
+        Resource: !GetAtt knowledgeTest.Arn
+    events:
+      - http:
+         method: post
+         path: knowledgetest/add
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+  knowledgeTest:
+    handler: api/user/addKnowledgeTest.user
+    environment:
+      USER_TABLE_NAME: !Ref userTable
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt userTable.Arn
+    events:
+      - http:
+         method: put
+         path: user/knowledgetest/{email_id}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+
+resources:
+ Resources:
+   certificateTablenew:
+     Type: AWS::DynamoDB::Table
+     Properties:
+       TableName: certificateTablenew
+       BillingMode: PAY_PER_REQUEST
+       AttributeDefinitions:
+        - AttributeName: certification_id
+          AttributeType: S
+       KeySchema:
+        - AttributeName: certification_id
+          KeyType: HASH
+   trainingRequestTableNew:
+     Type: AWS::DynamoDB::Table
+     Properties:
+       TableName: trainingRequestTableNew
+       BillingMode: PAY_PER_REQUEST
+       AttributeDefinitions:
+        - AttributeName: usecert
+          AttributeType: S
+       KeySchema:
+        - AttributeName: usecert
+          KeyType: HASH
+   userTable:
+     Type: AWS::DynamoDB::Table
+     Properties:
+       TableName: userTable
+       BillingMode: PAY_PER_REQUEST
+       AttributeDefinitions:
+        - AttributeName: email_id
+          AttributeType: S
+       KeySchema:
+        - AttributeName: email_id
+          KeyType: HASH
+   courseTable:
+     Type: AWS::DynamoDB::Table
+     Properties:
+       TableName: courseTable
+       BillingMode: PAY_PER_REQUEST
+       AttributeDefinitions:
+        - AttributeName: course_name
+          AttributeType: S
+       KeySchema:
+        - AttributeName: course_name
+          KeyType: HASH
+   approveTable:
+     Type: AWS::DynamoDB::Table
+     Properties:
+       TableName: approveTable
+       BillingMode: PAY_PER_REQUEST
+       AttributeDefinitions:
+        - AttributeName: approve_id
+          AttributeType: S
+       KeySchema:
+        - AttributeName: approve_id
+          KeyType: HASH
+   projectTable:
+     Type: AWS::DynamoDB::Table
+     Properties:
+       TableName: projectTable
+       BillingMode: PAY_PER_REQUEST
+       AttributeDefinitions:
+        - AttributeName: project_id
+          AttributeType: S
+       KeySchema:
+        - AttributeName: project_id
+          KeyType: HASH
+   knowledgeTest:
+     Type: AWS::DynamoDB::Table
+     Properties:
+       TableName: knowledgeTest
+       BillingMode: PAY_PER_REQUEST
+       AttributeDefinitions:
+        - AttributeName: course_name
+          AttributeType: S
+       KeySchema:
+        - AttributeName: course_name
+          KeyType: HASH
+  #  GatewayResponseDefault4XX:
+  #   Type: AWS::ApiGateway::GatewayResponse
+  #   Properties:
+  #     ResponseParameters:
+  #       gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+  #       gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+  #     ResponseType: DEFAULT4XX
+  #     RestApiId:
+  #       Ref: 'ApiGatewayRestApi'
+        

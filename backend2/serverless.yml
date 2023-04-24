@@ -1,0 +1,63 @@
+service: serverless-admin
+frameworkVersion: '3'
+
+custom:
+  allowedHeaders:
+    - Accept
+    - Content-Type
+    - userName 
+    - Access-Control-Allow-Origin
+    - Access-Control-Allow-Methods
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ap-south-1
+  stage: dev
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-offline
+
+functions:
+#getAllCertificates
+  getAllCertificate:
+    handler: api/getall.certificate
+    environment:
+      CERTIFICATE_TABLE_NAME: certificateTablenew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          # - "dyanmodb:Query"
+        Resource: arn:aws:dynamodb:ap-south-1:273104774689:table/certificateTablenew
+    events:
+      - http:
+         method: get
+         path: certificateList
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#putDeleteFlag
+  deleteFlag:
+    handler: api/deleteflag.certificate
+    environment:
+      CERTIFICATE_TABLE_NAME: certificateTablenew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: arn:aws:dynamodb:ap-south-1:273104774689:table/certificateTablenew
+    events:
+      - http:
+         method: put
+         path: certificateList/{certification_id}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+

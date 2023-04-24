@@ -1,0 +1,115 @@
+service: serverless-delete
+frameworkVersion: '3'
+
+custom:
+  allowedHeaders:
+    - Accept
+    - Content-Type
+    - userName 
+    - Access-Control-Allow-Origin
+    - Access-Control-Allow-Methods
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ap-south-1
+  stage: dev
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-offline
+
+functions:
+#getDeleteRequestedCertificates
+  getDeleteRequestedCertificate:
+    handler: api/deleterequested.certificate
+    environment:
+      CERTIFICATE_TABLE_NAME: certificateTablenew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          # - "dyanmodb:Query"
+        Resource: arn:aws:dynamodb:ap-south-1:273104774689:table/certificateTablenew
+    events:
+      - http:
+         method: get
+         path: certificateList
+        #  authorizer: aws_iam
+         cors: 
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#putDeleteFlag
+  deleteFlag:
+    handler: api/username.certificate
+    environment:
+      CERTIFICATE_TABLE_NAME: certificateTablenew
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: arn:aws:dynamodb:ap-south-1:273104774689:table/certificateTablenew
+    events:
+      - http:
+         method: put
+         path: certificateList/{certification_id}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#sendEmail
+  sendEmail:
+    handler: api/sendEmail.mail
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "ses:SendEmail"
+          - "ses:SendRawEmail"
+        Resource: "arn:aws:ses:*"
+    events:
+      - http:
+         method: post
+         path: certificateList/sendemail
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#verifyIdentity
+  verifyEmailIdentity:
+    handler: api/verifyEmail.mail
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "ses:VerifyEmailAddress"
+        Resource: "*"
+    events:
+      - http:
+         method: post
+         path: certificateList/verifyemail/{email}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+
+#deleteIdentity
+  deleteEmailIdentity:
+    handler: api/deleteEmail.mail
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "ses:DeleteIdentity"
+        Resource: "*"
+    events:
+      - http:
+         method: post
+         path: certificateList/deleteemail/{email}
+        #  authorizer: aws_iam
+         cors:
+          origin: '*'
+          headers: ${self:custom.allowedHeaders}
+

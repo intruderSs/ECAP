@@ -1,0 +1,19 @@
+{
+  "name": "serverless-delete",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "save-dev": "^0.0.1-security",
+    "serverless-iam-roles-per-function": "^3.2.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^12.0.3"
+  }
+}

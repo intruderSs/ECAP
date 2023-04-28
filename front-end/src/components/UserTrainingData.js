@@ -13,7 +13,6 @@ function UserTrainingData(props) {
     useEffect(() => {
         if (localStorage.getItem('token')) {
             getUserSpecificTrainingRequest(localStorage.getItem('email'));
-            console.log("Hello World");
         } else {
             navigate("/login");
             props.showAlert("First Authorize yourself", "", "warning");

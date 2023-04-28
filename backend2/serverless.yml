@@ -31,7 +31,7 @@ functions:
         Action:
           - "dynamodb:Scan"
           # - "dyanmodb:Query"
-        Resource: arn:aws:dynamodb:ap-south-1:273104774689:table/certificateTablenew
+        Resource: arn:aws:dynamodb:ap-south-1:138373247614:table/certificateTablenew
     events:
       - http:
          method: get
@@ -51,7 +51,7 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:UpdateItem"
-        Resource: arn:aws:dynamodb:ap-south-1:273104774689:table/certificateTablenew
+        Resource: arn:aws:dynamodb:ap-south-1:138373247614:table/certificateTablenew
     events:
       - http:
          method: put

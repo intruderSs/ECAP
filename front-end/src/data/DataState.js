@@ -16,7 +16,7 @@ const DataState = (props) => {
     const getData = async () => {
         //todo api call
         const username = localStorage.getItem('email');
-        const response = await fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/certificateList` + '?username=' + username, {
+        const response = await fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/certificateList` + '?username=' + username, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ const DataState = (props) => {
         });
 
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         ////till here array of items is visible in console
         setData(json.Items);
 
@@ -36,7 +36,7 @@ const DataState = (props) => {
     const getDeleteData = async () => {
         //todo api call
         const deleteflag = "deleteRequested";
-        const response = await fetch(`https://u0sq8tvo4k.execute-api.ap-south-1.amazonaws.com/dev/certificateList` + '?deleteflag=' + deleteflag, {
+        const response = await fetch(`https://b9tdhv1wva.execute-api.ap-south-1.amazonaws.com/dev/certificateList` + '?deleteflag=' + deleteflag, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const DataState = (props) => {
         });
 
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         ////till here array of items is visible in console
         //setData(json.Items);
         setDelData(json.Items);
@@ -55,7 +55,7 @@ const DataState = (props) => {
     ////get {ADMIN} all certificates data
     const getAllData = async () => {
         //todo api call
-        const response = await fetch(`https://yqr024w5pj.execute-api.ap-south-1.amazonaws.com/dev/certificateList`, {
+        const response = await fetch(`https://fz2xtk2dud.execute-api.ap-south-1.amazonaws.com/dev/certificateList`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ const DataState = (props) => {
         });
 
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         ////till here array of items is visible in console
         setAllData(json.Items);
 
@@ -86,7 +86,7 @@ const DataState = (props) => {
     ) => {
         //api call
         return await new Promise((resolve, reject) => {
-            fetch("https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/certificateList", {
+            fetch("https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/certificateList", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ const DataState = (props) => {
     const deleteData = async (certification_id) => {
 
         return await new Promise((resolve, reject) => {
-            fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/certificateList/${certification_id}`, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/certificateList/${certification_id}`, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ const DataState = (props) => {
         deleteflag) => {
 
         return await new Promise((resolve, reject) => {
-            fetch(`https://yqr024w5pj.execute-api.ap-south-1.amazonaws.com/dev/certificateList/${certification_id}`, {
+            fetch(`https://fz2xtk2dud.execute-api.ap-south-1.amazonaws.com/dev/certificateList/${certification_id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
@@ -209,7 +209,7 @@ const DataState = (props) => {
         certification_id,
         name) => {
         return await new Promise((resolve, reject) => {
-            fetch(`https://u0sq8tvo4k.execute-api.ap-south-1.amazonaws.com/dev/certificateList/${certification_id}`, {
+            fetch(`https://b9tdhv1wva.execute-api.ap-south-1.amazonaws.com/dev/certificateList/${certification_id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ const DataState = (props) => {
             }).then(res => {
                 resolve(res);
                 const json = res.json();
-                console.log(json);
+                //console.log(json);
                 let newData = JSON.parse(JSON.stringify(datas))
                 ///client side edit logic
                 for (let index = 0; index < newData.length; index++) {
@@ -249,7 +249,7 @@ const DataState = (props) => {
         validity) => {
 
         return await new Promise((resolve, reject) => {
-            fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/certificateList/${certification_id}`, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/certificateList/${certification_id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',

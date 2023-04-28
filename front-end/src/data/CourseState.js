@@ -9,7 +9,7 @@ const CourseState = (props) => {
     ///getCourseData
     const getAllCourseData = async () => {
         //todo api call
-        const response = await fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/course/all`, {
+        const response = await fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/course/all`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ const CourseState = (props) => {
         });
 
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         ////till here array of items is visible in console
         setAllCourseData(json.Items);
     }
@@ -27,7 +27,7 @@ const CourseState = (props) => {
     const deleteCourseData = async (course_name) => {
 
         return await new Promise((resolve, reject) => {
-            fetch('https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/course/delete/' + course_name, {
+            fetch('https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/course/delete/' + course_name, {
                 method: "DELETE",
                 // headers: {
                 //     'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const CourseState = (props) => {
     ) => {
         //api call
         return await new Promise((resolve, reject) => {
-            fetch("https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/course/add", {
+            fetch("https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/course/add", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const CourseState = (props) => {
         skill_set) => {
 
         return await new Promise((resolve, reject) => {
-            fetch(` https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/course/update`, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/course/update`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',

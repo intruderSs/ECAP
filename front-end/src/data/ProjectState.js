@@ -9,7 +9,7 @@ const ProjectState = (props) => {
     ///getCourseData
     const getAllProject = async () => {
         //todo api call
-        const response = await fetch(` https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/projects/all`, {
+        const response = await fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/projects/all`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ const ProjectState = (props) => {
         });
 
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         ////till here array of items is visible in console
         setAllProjectData(json.Items);
     }
@@ -54,7 +54,7 @@ const ProjectState = (props) => {
     ) => {
         //api call
         return await new Promise((resolve, reject) => {
-            fetch("https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/project/add", {
+            fetch("https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/knowledgetest/add", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const ProjectState = (props) => {
         project_id,
         team) => {
         return await new Promise((resolve, reject) => {
-            fetch(` https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/project/update/${project_id}`, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/project/update/${project_id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',

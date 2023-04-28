@@ -26,7 +26,7 @@ function Login(props) {
 
     ///status login or logout
     const [status, setStatus] = useState(false);
-    const { getSession, authenticate, sendCode, resetPass } = useContext(AccountContext);
+    const { getSession, authenticate, sendCode, resetPass, verifyUser } = useContext(AccountContext);
 
     const { verifyMail } = useContext(mailContext);
 
@@ -232,7 +232,7 @@ function Login(props) {
         let year = date_.getFullYear();
         let day = date_.getDate();
         let date = year + "-" + month + "-" + day;
-        const approved_by = process.env.REACT_APP_ADMIN_NAME;
+        const approved_by = "System";
         const cluster = "Default";
         let cluster_data = {
             approved_by,
@@ -256,8 +256,8 @@ function Login(props) {
                         setLastName("");
                         setCPassword("");
                     } else {
-                        //console.log(data);
-                        ///this function is for verifying ses identity
+                        console.log(data);
+                        //this function is for verifying ses identity
                         createUser(
                             firstName,
                             lastName,

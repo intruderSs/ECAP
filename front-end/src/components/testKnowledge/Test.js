@@ -38,16 +38,17 @@ function Test() {
     getAllCourseData();
     getTestData(localStorage.getItem('Test_Name'))
       .then(data => {
-        //console.log(data.Items[0].test);
-        setCheckedData(data.Items[0].test);
-        setMainData(data.Items[0].test);
+        if (data.Items[0]?.test) {
+          setCheckedData(data.Items[0].test);
+          setMainData(data.Items[0].test);
+        }
       })
       .catch(err => {
         console.group(err);
       })
   }, [])
 
-  console.group(mainData);
+  //console.group(mainData);
 
   const setAnswers = (data, name, checked) => {
     const checkedAnswer = data.answers.map((a) => a.ans === name ? { ...a, isChecked: checked } : { ...a, isChecked: false });
@@ -93,7 +94,7 @@ function Test() {
         })
     } else if (userData && userData[0]?.knowledgeTest && userData[0].knowledgeTest[0].course_name === localStorage.getItem("Test_Name")) {
       ///in future we have to work on for loop here
-      console.log("Two");
+     // console.log("Two");
       if (userData[0].knowledgeTest[0].attempts_remaining > 0) {
         let knowledgeTest = [{
           course_name: localStorage.getItem("Test_Name"),
@@ -101,7 +102,7 @@ function Test() {
         }]
         addKnowledgeCheck(localStorage.getItem('email'), knowledgeTest)
           .then(data => {
-            console.log("Test Started Successfully");
+           // console.log("Test Started Successfully");
             setAgree(!Agree);
           })
           .catch(err => {
@@ -157,9 +158,9 @@ function Test() {
         console.log("done");
         passResult.current.click();
       })
-      .catch(err => {
-        console.log(err);
-      })
+        .catch(err => {
+          console.log(err);
+        })
 
     } else {
       failResult.current.click();

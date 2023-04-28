@@ -10,7 +10,7 @@ const TestState = (props) => {
     ///getCourseData
     const getAllTestData = async (course_name) => {
         //todo api call
-        const response = await fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/knowledgetest/all?course_name=` + course_name, {
+        const response = await fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/knowledgetest/all?course_name=` + course_name, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -19,14 +19,14 @@ const TestState = (props) => {
         });
 
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         ////till here array of items is visible in console
         setAllTestData(json.Items);
     }
 
     const getTestData = async (course_name) => {
         return await new Promise((resolve, reject) => {
-            fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/knowledgetest/all?course_name=` + course_name, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/knowledgetest/all?course_name=` + course_name, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ const TestState = (props) => {
     ) => {
         //api call
         return await new Promise((resolve, reject) => {
-            fetch("https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/knowledgetest/add", {
+            fetch("https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/knowledgetest/add", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

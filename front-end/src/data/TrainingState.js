@@ -26,7 +26,7 @@ const TrainingState = (props) => {
     ) => {
         //api call
         return await new Promise((resolve, reject) => {
-            fetch("https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/training/register", {
+            fetch("https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/training/register", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const TrainingState = (props) => {
     const deleteData = async (usecert) => {
 
         return await new Promise((resolve, reject) => {
-            fetch('https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/trainingdelete/' + usecert, {
+            fetch('https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/trainingdelete/' + usecert, {
                 method: "DELETE",
                 // headers: {
                 //     'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ const TrainingState = (props) => {
     ///getAllTrainingRequest
     const getAllTrainingRequest = async () => {
         //todo api call
-        const response = await fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/training/all`, {
+        const response = await fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/training/all`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ const TrainingState = (props) => {
         });
 
         const json = await response.json();
-        console.log(json);
+       // console.log(json);
         ////till here array of items is visible in console
         setAllTrainingData(json.Items);
     }
@@ -96,7 +96,7 @@ const TrainingState = (props) => {
     //getUserSpecificTrainingDetails
     const getUserSpecificTrainingRequest = async (email_id) => {
         //const email_id = localStorage.getItem("email");
-        const response = await fetch('https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/training/user' + '?email_id=' + email_id, {
+        const response = await fetch('https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/training/user' + '?email_id=' + email_id, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ const TrainingState = (props) => {
         });
         const json = await response.json();
         setTrainingData(json.Items);
-        console.log(json);
+       // console.log(json);
         ////till here array of items is visible in console
         //setData(json.Items);
 
@@ -119,7 +119,7 @@ const TrainingState = (props) => {
         rejected) => {
 
         return await new Promise((resolve, reject) => {
-            fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/training/updateinfo/${usecert}`, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/training/updateinfo/${usecert}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',

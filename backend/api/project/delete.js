@@ -7,7 +7,7 @@ var documentClient = new DynamoDB.DocumentClient({
     timeout: 50000,
   },
 });
-const PROJECT_TABLE_NAME = process.env.COURSE_TABLE_NAME;
+const PROJECT_TABLE_NAME = process.env.PROJECT_TABLE_NAME;
 
 module.exports.data = async (event, context, cntxt) => {
   let project_id = event.pathParameters.project_id;

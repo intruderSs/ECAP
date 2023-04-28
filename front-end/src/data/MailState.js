@@ -5,7 +5,7 @@ const MailState = (props) => {
 
     const verifyMail = async (email) => {
 
-        const response = await fetch(`https://u0sq8tvo4k.execute-api.ap-south-1.amazonaws.com/dev/certificateList/verifyemail/${email}`, {
+        const response = await fetch(` https://b9tdhv1wva.execute-api.ap-south-1.amazonaws.com/dev/certificateList/verifyemail/${email}`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -13,13 +13,13 @@ const MailState = (props) => {
             }
         });
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         console.log("SES verification mail sent successfully" + email);
     }
 
     const deleteMail = async (email) => {
 
-        const response = await fetch(`https://u0sq8tvo4k.execute-api.ap-south-1.amazonaws.com/dev/certificateList/deleteemail/${email}`, {
+        const response = await fetch(`https://b9tdhv1wva.execute-api.ap-south-1.amazonaws.com/dev/certificateList/deleteemail/${email}`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -27,13 +27,13 @@ const MailState = (props) => {
             }
         });
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         console.log("Identity deleted successfully" + email);
     }
 
     const sendMail = async (sendEmail, receiveEmail, content, subject) => {
 
-        await fetch(`https://u0sq8tvo4k.execute-api.ap-south-1.amazonaws.com/dev/certificateList/sendemail`, {
+        await fetch(`https://b9tdhv1wva.execute-api.ap-south-1.amazonaws.com/dev/certificateList/sendemail`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const MailState = (props) => {
                 throw new Error(res.statusText);
             }
             const data = res.json();
-            console.log(data);
+            //console.log(data);
             console.log("Email sent successfully");
         }).catch(err => {
             console.log(err);

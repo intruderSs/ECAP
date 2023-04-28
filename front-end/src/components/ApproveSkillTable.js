@@ -9,7 +9,7 @@ function ApproveSkillTable(props) {
     const ref = useRef(null);
     const refClose = useRef(null);
 
-    const { allCourseData, approveData, updateApproveData, getAllApproveData } = props;
+    const { allCourseData, approveData, updateApproveData, getAllApproveData, showAlert } = props;
 
     const { addCluster, getSpecificData, userData } = useContext(userContext);
 
@@ -93,7 +93,7 @@ function ApproveSkillTable(props) {
             console.log(allCluster);
             addCluster(mail, allCluster)
                 .then(data => {
-                    props.shoAlert('Cluster added successfully', '', 'success');
+                    showAlert('Cluster added successfully', '', 'success');
                     const newData = trainingData.filter((data) => { return data.approve_id !== approve });
                     setTrainingData(newData);
                 })
@@ -104,7 +104,7 @@ function ApproveSkillTable(props) {
             console.log("Zero Cluster");
             addCluster(mail, data)
                 .then(data => {
-                    props.shoAlert('Cluster added successfully', '', 'success');
+                    showAlert('Cluster added successfully', '', 'success');
                     const newData = trainingData.filter((data) => { return data.approve_id !== approve });
                     setTrainingData(newData);
                 })
@@ -149,7 +149,7 @@ function ApproveSkillTable(props) {
                     getSpecificData(checkedInput[j].email_id)
                         .then(data => {
                             console.log(data.Items[0].skill_cluster);
-                            addAllCluster(checkedInput[j].email_id, cluster_data, checkedInput[j].approve_id, data.Items[0]?.skill_cluster && [data.Items[0].skill_cluster]);
+                            addAllCluster(checkedInput[j].email_id, cluster_data, checkedInput[j].approve_id, data.Items[0]?.skill_cluster && data.Items[0].skill_cluster);
                         })
                         .catch(err => {
                             console.log(err);

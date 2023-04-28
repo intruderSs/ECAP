@@ -2001,3 +2001,8 @@ justify-content: center;
 .timer h3 {
   padding: 20px;
 }
+
+.cert-cluster {
+  font-size: 12px;
+  color: #fff;
+}

@@ -31,7 +31,7 @@ function ApproveSkill(props) {
                     <h5 className="container mx-2">
                         {approve_data.length === 0 && "No data to display"}
                     </h5>
-                    {approve_data.length > 0 && <ApproveSkillTable allCourseData={allCourseData} getAllCourseData={getAllCourseData} getAllApproveData={getAllApproveData} approveData={approveData} updateApproveData={updateApproveData} />}
+                    {approve_data.length > 0 && <ApproveSkillTable showAlert={props.showAlert} allCourseData={allCourseData} getAllCourseData={getAllCourseData} getAllApproveData={getAllApproveData} approveData={approveData} updateApproveData={updateApproveData} />}
                 </div>
             </div>
         </>

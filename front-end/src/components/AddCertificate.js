@@ -50,7 +50,7 @@ function AddCertificate(props) {
         validity: "",
     });
 
-    const addSkillAndCluster = () => {
+    const addSkillAndCluster = (cert) => {
         let mail = localStorage.getItem('email');
         let oldcluster = userData[0]?.skill_cluster ? userData[0].skill_cluster : [];
         let date_ = new Date();
@@ -58,17 +58,18 @@ function AddCertificate(props) {
         let year = date_.getFullYear();
         let day = date_.getDate();
         let date = year + "-" + month + "-" + day;
-        const approved_by = "Self";
+        const approved_by = "System";
         const cluster = "AWS Infra";
         let data = {
             approved_by,
             date,
-            cluster
+            cluster,
+            cert
         }
-        console.log(oldcluster);
+        //console.log(oldcluster);
         if (oldcluster) {
             let allCluster = [...oldcluster, data];
-            console.log(allCluster);
+            //console.log(allCluster);
             addCluster(mail, allCluster)
                 .then(data => {
                     let courseSkill = [];
@@ -105,7 +106,7 @@ function AddCertificate(props) {
                         localStorage.getItem('email'),
                         userSkillWithRating
                     ).then(data => {
-                        console.log("done");
+                        //console.log(userSkillWithRating);
                     })
                         .catch(err => {
                             console.log(err);
@@ -115,7 +116,7 @@ function AddCertificate(props) {
                     console.log(err);
                 })
         } else {
-            console.log("Zero Cluster");
+            //console.log("Zero Cluster");
             addCluster(mail, data)
                 .then(data => {
                     let courseSkill = [];
@@ -189,7 +190,7 @@ function AddCertificate(props) {
                     date_of_expiry: "",
                     validity: ""
                 })
-                addSkillAndCluster();
+                addSkillAndCluster(data.certification_name);
             }).catch(err => {
                 props.showAlert(`${err}`, "Validation Id already exists", "danger");
                 ref.current.click();

@@ -18,7 +18,7 @@ const UserState = (props) => {
     ) => {
         //api call
         return await new Promise((resolve, reject) => {
-            fetch("https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/user", {
+            fetch("https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/user", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ const UserState = (props) => {
     const deleteUser = async () => {
         const email_id = localStorage.getItem('email');
         return await new Promise((resolve, reject) => {
-            fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/deleteuser/${email_id}`, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/deleteuser/${email_id}`, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const UserState = (props) => {
     ///getAllTrainingRequest
     const getAllUserData = async () => {
         //todo api call
-        const response = await fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/user/all`, {
+        const response = await fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/user/all`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ const UserState = (props) => {
         });
 
         const json = await response.json();
-        console.log(json);
+       // console.log(json);
         ////till here array of items is visible in console
         setAllUserData(json.Items);
     }
@@ -84,7 +84,7 @@ const UserState = (props) => {
     //getUserSpecificTrainingDetails
     const getSpecificUserData = async (email_id) => {
         //const email_id = localStorage.getItem('email');
-        const response = await fetch('https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/user/specific' + '?email_id=' + email_id, {
+        const response = await fetch('https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/user/specific' + '?email_id=' + email_id, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -93,11 +93,11 @@ const UserState = (props) => {
         });
         const json = await response.json();
         setUserData(json.Items);
-        console.log(json);
+        //console.log(json);
         ////till here array of items is visible in console
         //setData(json.Items);
-        console.log(json.Items[0].allocation_sbu);
-        console.log(json.Items[0].service_sl);
+        //console.log(json.Items[0].allocation_sbu);
+        //console.log(json.Items[0].service_sl);
         localStorage.setItem('sbu', json.Items[0].allocation_sbu);
         localStorage.setItem('sl', json.Items[0].service_sl);
 
@@ -105,7 +105,7 @@ const UserState = (props) => {
 
     const getSpecificData = async (email_id) => {
         return await new Promise((resolve, reject) => {
-            fetch('https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/user/specific' + '?email_id=' + email_id, {
+            fetch('https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/user/specific' + '?email_id=' + email_id, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ const UserState = (props) => {
         service_sl) => {
         const email_id = localStorage.getItem("email");
         return await new Promise((resolve, reject) => {
-            fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/user/update/${email_id}`, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/user/update/${email_id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ const UserState = (props) => {
         email_id,
         skill_set) => {
         return await new Promise((resolve, reject) => {
-            fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/user/addskill/${email_id}`, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/user/addskill/${email_id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ const UserState = (props) => {
         email_id,
         skill_cluster) => {
         return await new Promise((resolve, reject) => {
-            fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/user/addcluster/${email_id}`, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/user/addcluster/${email_id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
@@ -232,7 +232,7 @@ const UserState = (props) => {
         email_id,
         project) => {
         return await new Promise((resolve, reject) => {
-            fetch(`https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/user/addproject/${email_id}`, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/user/addproject/${email_id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
@@ -265,7 +265,7 @@ const UserState = (props) => {
         email_id,
         knowledgeTest) => {
         return await new Promise((resolve, reject) => {
-            fetch(` https://11h11u0e9l.execute-api.ap-south-1.amazonaws.com/dev/user/knowledgetest/${email_id}`, {
+            fetch(`https://2pnugsu1o4.execute-api.ap-south-1.amazonaws.com/dev/user/knowledgetest/${email_id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',

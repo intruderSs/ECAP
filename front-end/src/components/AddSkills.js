@@ -66,7 +66,7 @@ function AddSkills(props) {
         if (value === "") {
             set_all_skill([]);
         } else {
-            set_all_skill(s.filter((data) => { return data.startsWith(value) }));
+            set_all_skill(s.filter((data) => { return data.toLowerCase().startsWith(value.toLowerCase()) }));
         }
     }
 
@@ -229,25 +229,25 @@ function AddSkills(props) {
     const popover = (
         <Popover id="popover-basic" className="poppver-body">
             <Popover.Body>
-                <div class="S___cluster me-4">
-                    <div class="skills-bar">
-                        <div class="bar">
-                            <div class="info">
+                <div className="S___cluster me-4">
+                    <div className="skills-bar">
+                        <div className="bar">
+                            <div className="info">
                                 <span style={{ fontSize: "20px" }}>{clusterName}  <i style={{ color: "green" }} className="fa-solid fa-person-running fa-beat-fade"></i></span>
                             </div>
-                            {completed && all && <div class="progress-line"><span className="html" value={Math.round(completed.length / all.length * 100) + "%"} style={{ width: Math.round(completed.length / all.length * 100) + "%" }}></span></div>}
+                            {completed && all && <div className="progress-line"><span className="html" value={Math.round(completed.length / all.length * 100) + "%"} style={{ width: Math.round(completed.length / all.length * 100) + "%" }}></span></div>}
                             <div style={{ display: "flex", justifyContent: "space-between" }} className="mt-3">
-                                <div class="info ms-5">
+                                <div className="info ms-5">
                                     <span>Completed</span>
                                     <hr style={{ margin: "auto" }} />
                                     {completed && completed.map((data, i) => {
-                                        return <div>
+                                        return <div key={i}>
                                             <span style={{ color: "#ff9900" }}>{data} <i style={{ fontWeight: "bold", color: "green" }} className="fa-solid fa-check fa-bounce"></i></span>
                                         </div>
                                     })}
                                     {completed && completed.length === 0 && <span style={{ justifyContent: "center", display: "flex", fontSize: "30px", color: "#FF9900" }}><i className="fa-minus fa-solid fa-shake"></i></span>}
                                 </div>
-                                <div class="info me-5">
+                                <div className="info me-5">
                                     <span>Pending</span>
                                     <hr style={{ margin: "auto" }} />
                                     {pending_ && pending_.map((data, i) => {
@@ -257,7 +257,7 @@ function AddSkills(props) {
                                     })}
                                     {pending_ && pending_.length === 0 && <span style={{ justifyContent: "center", display: "flex", fontSize: "30px", color: "#FF9900" }}><i className="fa-minus fa-solid fa-shake"></i></span>}
                                 </div>
-                                <div class="info me-5">
+                                <div className="info me-5">
                                     <span>All</span>
                                     <hr style={{ margin: "auto" }} />
                                     {all && all.map((data, i) => {
@@ -285,8 +285,6 @@ function AddSkills(props) {
         setAll(all);
     }
 
-    console.log(userData[0]);
-
 
     return (
         <>
@@ -297,14 +295,14 @@ function AddSkills(props) {
                         <Tabs justify variant='pills' defaultActiveKey="tab-1" className="mb-1 p-0 col-md-4">
                             <Tab eventKey="tab-1" title="View Cluster" className="mb-5">
                                 {userData && userData[0]?.skill_cluster ? userData[0].skill_cluster.map((data, id) => {
-                                    return <OverlayTrigger trigger="click" placement="right" overlay={popover} rootClose>
+                                    return <OverlayTrigger trigger="click" placement="right" overlay={popover} rootClose key={id}>
                                         <div key={id} className="cluster-wrap" style={{ marginTop: '30px' }} onClick={() => handleClusterDetails(data.cluster, getCommonSkill(data.cluster), getUnCommonSkill(data.cluster), getClusterDetails(data.cluster))}>
                                             <div className="cluster-img-div">
                                                 <div>
                                                     <img src={neural} className="cluster-img" alt="..." />
                                                 </div>
                                                 <div className="cluster_body">
-                                                    <h3>{data.cluster}</h3>
+                                                    <h3>{data.cluster} {data?.cert && <span className="cert-cluster">- {data.cert}</span>}</h3>
                                                     <p>Approved by: {data.approved_by}</p>
                                                 </div>
                                             </div>

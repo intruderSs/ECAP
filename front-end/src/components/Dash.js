@@ -70,14 +70,14 @@ function Dash(props) {
     const popover = (
         <Popover id="popover-basic" className="poppver-body">
             <Popover.Body>
-                <div class="skills me-4">
-                    <div class="skills-bar">
+                <div className="skills me-4">
+                    <div className="skills-bar">
                         {userData.length > 0 && userData[0]?.skill_set ?  userData[0].skill_set.map((data, index) => {
-                            return <div class="bar" key={index}>
-                                <div class="info">
+                            return <div className="bar" key={index}>
+                                <div className="info">
                                     <span>{data.skill_with_rating}</span>
                                 </div>
-                                <div class="progress-line"><span className="html" value={data.rating + "0%"} style={{ width: data.rating + "0%"}}></span></div>
+                                <div className="progress-line"><span className="html" value={data.rating + "0%"} style={{ width: data.rating + "0%"}}></span></div>
                             </div>
                         }) : <span style={{fontSize: "20px"}}>No skills added</span>}
                         
@@ -149,7 +149,7 @@ function Dash(props) {
         setA_sbu("");
         setS_sl("");
         setP_P("");
-        userRefClose.current.close();
+        //userRefClose.current.close();
     }
 
     const ViewUserTrainingDetails = () => {
